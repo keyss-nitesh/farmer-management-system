@@ -184,7 +184,6 @@
 
 // export default App;
 
-
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -198,6 +197,7 @@ import AddExpense from './components/AddExpense';
 import AddSale from './components/AddSale';
 import Reports from './components/Reports';
 import Analytics from './components/Analytics';
+import Weather from './components/Weather'; // ✅ Import Weather component
 
 function AppContent() {
   const dispatch = useDispatch();
@@ -246,6 +246,17 @@ function AppContent() {
   const linkContainerStyle = { display: 'flex', gap: '18px', alignItems: 'center', flexWrap: 'wrap' };
   const linkStyle = { color: '#fbb6ce', textDecoration: 'none', fontWeight: 'bold', fontSize: '16px', padding: '10px 15px', borderRadius: '15px' };
   const logoutButtonStyle = { backgroundColor: '#c53030', color: '#fff', border: 'none', padding: '12px 20px', borderRadius: '25px', cursor: 'pointer', fontWeight: 'bold' };
+  
+  // ✅ Weather icon style
+  const weatherIconStyle = {
+    color: '#fbbf24',
+    textDecoration: 'none',
+    fontSize: '28px',
+    padding: '8px',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+  };
 
   const modalOverlayStyle = {
     position: 'fixed', top:0, left:0, right:0, bottom:0,
@@ -303,6 +314,7 @@ function AppContent() {
                     <Link to="/add-sale" style={linkStyle} onClick={() => setShowMenu(false)}>Add Sale</Link>
                     <Link to="/reports" style={linkStyle} onClick={() => setShowMenu(false)}>Reports</Link>
                     <Link to="/analytics" style={linkStyle} onClick={() => setShowMenu(false)}>Analytics</Link>
+                    <Link to="/weather" style={linkStyle} onClick={() => setShowMenu(false)}>☀️ Weather</Link>
                     <button
                       onClick={() => setShowLogoutModal(true)}
                       style={logoutButtonStyle}
@@ -318,8 +330,12 @@ function AppContent() {
                   <Link to="/add-sale" style={linkStyle}>Add Sale</Link>
                   <Link to="/reports" style={linkStyle}>Reports</Link>
                   <Link to="/analytics" style={linkStyle}>Analytics</Link>
+                  
+                  {/* ✅ Weather Icon */}
+                  <Link to="/weather" style={weatherIconStyle} title="Weather">
+                    ☀️
+                  </Link>
 
-                  {/* ✅ ONLY FIX IS HERE */}
                   <button
                     onClick={() => setShowLogoutModal(true)}
                     style={logoutButtonStyle}
@@ -338,6 +354,7 @@ function AppContent() {
                   <Route path="/add-sale" element={<AddSale />} />
                   <Route path="/reports" element={<Reports />} />
                   <Route path="/analytics" element={<Analytics />} />
+                  <Route path="/weather" element={<Weather />} /> {/* ✅ Weather Route */}
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </div>
