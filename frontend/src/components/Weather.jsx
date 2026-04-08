@@ -16,8 +16,11 @@ export default function Weather() {
     if (!searchCity.trim()) return;
     setLoading(true);
     setError(null);
-    try {
-      const res = await axios.get(`http://localhost:5000/api/weather?city=${searchCity}`);
+   try {
+      // API URL setup (Live vs Local)
+      const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+      const res = await axios.get(`${API_BASE_URL}/api/weather?city=${searchCity}`);
       setData(res.data);
     } catch (err) {
       setError("City not found. Please check and try again.");
