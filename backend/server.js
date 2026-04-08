@@ -50,6 +50,14 @@ app.get('/api/test-weather', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
+app.get('/api/view-data', async (req, res) => {
+  try {
+    const [users] = await db.promise().query('SELECT * FROM users');
+    const [sales] = await db.promise().query('SELECT * FROM sales');
+    res.json({ users, sales });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
