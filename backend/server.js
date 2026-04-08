@@ -24,7 +24,7 @@ const authRoutes = require('./routes/auth');
 const expenseRoutes = require('./routes/expenses');
 const saleRoutes = require('./routes/sales');
 const weatherRoutes = require('./routes/weather');
-
+const db = require('./db');
 require('dotenv').config();
 
 const app = express();
