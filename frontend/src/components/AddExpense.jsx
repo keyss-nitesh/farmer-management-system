@@ -248,9 +248,11 @@ function AddExpense() {
       category,
       amount,
     };
+try {
+      // Live variables check karega (Cloudflare se) ya phir local (localhost)
+      const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-    try {
-      const res = await fetch("http://localhost:5000/api/expenses", {
+      const res = await fetch(`${API_BASE_URL}/api/expenses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -264,7 +266,8 @@ function AddExpense() {
         dispatch(addExpense(savedExpense));
         navigate("/");
       } else {
-        alert("Failed to add expense");
+        const errorData = await res.json();
+        alert(errorData.message || "Failed to add expense");
       }
     } catch (err) {
       alert("Network error");

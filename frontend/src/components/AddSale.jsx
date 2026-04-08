@@ -255,8 +255,11 @@ function AddSale() {
       payment_mode: paymentMode,
     };
 
-    try {
-      const res = await fetch("http://localhost:5000/api/sales", {
+   try {
+      // API URL check (Live/Local)
+      const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+      const res = await fetch(`${API_BASE_URL}/api/sales`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -270,7 +273,8 @@ function AddSale() {
         dispatch(addSale(savedSale));
         navigate("/");
       } else {
-        alert("Error adding sale");
+        const errorData = await res.json();
+        alert(errorData.message || "Error adding sale");
       }
     } catch (err) {
       alert("Network error");

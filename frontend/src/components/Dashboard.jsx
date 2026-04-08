@@ -220,19 +220,25 @@ function Dashboard() {
     const startTime = Date.now();
 
     const fetchData = async () => {
-      try {
-        const expenseRes = await fetch("http://localhost:5000/api/expenses", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const expenseData = await expenseRes.json();
-        dispatch(setExpenses(expenseData));
+     try {
+  // Pehle API URL setup karein
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-        const saleRes = await fetch("http://localhost:5000/api/sales", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const saleData = await saleRes.json();
-        dispatch(setSales(saleData));
-      } catch (err) {
+  // Expenses Fetch
+  const expenseRes = await fetch(`${API_BASE_URL}/api/expenses`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const expenseData = await expenseRes.json();
+  dispatch(setExpenses(expenseData));
+
+  // Sales Fetch
+  const saleRes = await fetch(`${API_BASE_URL}/api/sales`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const saleData = await saleRes.json();
+  dispatch(setSales(saleData));
+  
+}  catch (err) {
         console.error("API error:", err);
       } finally {
         const elapsed = Date.now() - startTime;
